@@ -8,7 +8,7 @@ export default function AsideBar() {
     const { toggle, setToggle } = useContext(MainContext)
 
     return (
-        <div className={`w-[103px] flex min-h-[100vh] fixed  justify-between flex-col rounded-[0_20px_20px_0] bg-[#373B53]`}>
+        <div className={`w-[103px] z-10 flex min-h-[100vh] fixed  justify-between flex-col rounded-[0_20px_20px_0] bg-[#373B53]`}>
             <div className={`bg-[#7C5DFA] relative w-[100%] h-[103px] rounded-[0_20px_20px_0] flex items-end`}>
                 <img src="/images/logo.svg" className="absolute w-[40px] right-[31.5px] top-[31.5px]" alt="" />
                 <div className={`h-[50%] w-[100%] bg-[#9277FF] rounded-tl-[20px]`}>
