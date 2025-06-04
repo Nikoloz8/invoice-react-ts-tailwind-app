@@ -142,17 +142,22 @@ export default function Home() {
         setInvoices(prev => [...prev, invoiceData])
     }
 
+    const deleteItem = (index1: number) => {
+        const filtered = watch("items").filter((_e, index2) => {
+            index1 !== index2
+        })
+
+        setValue("items", filtered)
+    }
+
 
     return (
         <div className="flex">
             <div className={`${!showForm ? "bg-[rgba(0,0,0,0)] z-[-1]" : undefined} fixed top transition-bg duration-1000 left-0 top-0 w-full h-full bg-[rgba(0,0,0,0.2)]`}></div>
             <AsideBar />
             <div className="relative">
-                <form onSubmit={(e) => e.preventDefault()} className={`p-[48px_48px_360px_150px] ${showForm ? "left-0!" : undefined} transition-left duration-1000 overflow-y-auto ease-in-out z-5 bg-[#FFFFFF] left-[-620px] absolute h-[100%] min-h-[100vh]`} action="">
-                    <div className="w-[504px]">
-                        <h2 className={`${H2}`}>New Invoice</h2>
-                    </div>
-
+                <form onSubmit={(e) => e.preventDefault()} className={`fixed top-0 bottom-0 ${showForm ? "left-0" : "left-[-620px]"} w-[620px] transition-all duration-1000 ease-in-out z-[5] bg-white overflow-y-auto p-[48px_48px_120px_150px]`} action="">
+                    <h2 className={`${H2}`}>New Invoice</h2>
                     <div className="flex flex-col gap-[24px] mt-[50px]">
 
                         <h4 className={`${H4} text-[#7C5DFA]`}>Bill From</h4>
@@ -275,7 +280,7 @@ export default function Home() {
                                     <h5 className={`${P2} text-[#7E88C3]`}>Qty.</h5>
                                     <h5 className={`${P2} text-[#7E88C3]`}>Price</h5>
                                 </div>
-                                <h5 className={`${P2} text-[#7E88C3]`}>Total</h5>
+                                <h5 className={`${P2} text-[#7E88C3] mr-[35px]!`}>Total</h5>
                             </div>
                             <div className="mt-[20px] flex flex-col gap-[16px] mb-[20px]">
                                 {fields.map((e, index) => {
@@ -290,10 +295,11 @@ export default function Home() {
                                                 onChange={handlePriceChange(index)}
                                                 className={`${inputStyle} w-[20%]!`} name="" id="" />
                                         </div>
-                                        <div className="w-[10%]! ">
+                                        <div className=" w-[15%]! flex items-center gap-[20px]">
                                             <h5 className={`${P2} text-[#888EB0]`}>
                                                 {watch(`items.${index}.total`).toFixed(2)}
                                             </h5>
+                                            <svg width="13" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z" fill="#888EB0" fillRule="nonzero" /></svg>
                                         </div>
                                     </div>
                                 })}
@@ -307,7 +313,7 @@ export default function Home() {
                         </div>
 
                     </div>
-                    <div className={`${showForm ? "left-[0]" : undefined} w-[717px] shadow-[-15px_0_50px_0_rgba(0,0,0,0.1)] left-[-717px] transition-left duration-1000 overflow-y-auto ease-in-out fixed bottom-0 bg-[#FFFFFF] flex items-center p-[0_50px_0_150px] h-[100px]`}>
+                    <div className={`fixed bottom-0 ${showForm ? "left-0" : "left-[-620px]"} w-[620px] h-[100px] transition-all duration-1000 ease-in-out bg-[#FFFFFF] shadow-[-15px_0_50px_rgba(0,0,0,0.1)] flex items-center p-[0_50px_0_150px]`}>
                         <div className="flex justify-between w-[100%]">
                             <button className={`w-[96px] h-[48px] outline-none rounded-[24px] bg-[#F9FAFE] ${P2} text-[#7E88C3] font-[700] cursor-pointer`} onClick={() => {
                                 reset()
@@ -328,7 +334,7 @@ export default function Home() {
 
                 </form>
             </div >
-            <div className="w-[100%]! flex justify-center ml-[103px]">
+            <div className="w-[100%]! ml-[103px] flex justify-center">
                 <div className="w-[730px]!">
                     <header className="flex justify-between items-center mt-[24px]">
                         <div>
@@ -337,7 +343,7 @@ export default function Home() {
                         </div>
                         <div className="flex items-center gap-[32px]">
                             <div className="relative">
-                                <button onClick={() => setShow(!show)} className="cursor-pointer flex items-center gap-[10px]">
+                                <button onClick={() => !showForm ? setShow(!show) : undefined} className={`${!showForm ? "cursor-pointer" : undefined} flex items-center gap-[10px]`}>
                                     <h4 className={`${H4}`}>Filter by status</h4>
                                     <svg className={`${show ? "rotate-[180deg]" : undefined} transition-[1s]`} width="11" height="7" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4.228 4.228L9.456 1" stroke="#7C5DFA" strokeWidth="2" fill="none" fillRule="evenodd" /></svg>
                                 </button>
@@ -359,7 +365,10 @@ export default function Home() {
                                     </label>
                                 </div>
                             </div>
-                            <button onClick={() => setShowForm(true)} className={`w-[150px] flex items-center gap-[12px] text-[#FFFFFF]! p-[8px] h-[48px] rounded-[24px] bg-[#7C5DFA] ${H4}`}>
+                            <button onClick={() => {
+                                setShowForm(true)
+                                setShow(false)
+                            }} className={`w-[150px] flex items-center gap-[12px] text-[#FFFFFF]! p-[8px] h-[48px] rounded-[24px] bg-[#7C5DFA] ${H4}`}>
                                 <div className="w-[32px] h-[32px] rounded-full bg-[#FFFFFF] flex items-center justify-center">
                                     <img src="/images/icon-plus.svg" alt="" />
                                 </div>
