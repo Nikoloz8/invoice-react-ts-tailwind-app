@@ -8,7 +8,8 @@ export default function tailwind() {
     const P2 = "text-[1.3rem] font-[500] leading-[15px] tracking-[-0.1px] text-[#0C0E16]"
     const inputStyle = `w-[100%] h-[48px] p-[16px] outline-none border-[1px] border-solid border-[#DFE3FA] rounded-[4px] ${H4}`
     const labelInput = "flex flex-col gap-[9px]"
+    const filterButtonStyle = "bg-no-repeat bg-center w-[16px] h-[16px] rounded-[2px] bg-[#DFE3FA] peer-checked:bg-[#7C5DFA] hover:border-[1px] border-solid border-[#7C5DFA]"
 
-    return { H1, H2, H3, H4, P1, P2, inputStyle, labelInput }
+    return { H1, H2, H3, H4, P1, P2, inputStyle, labelInput, filterButtonStyle }
 
 }
