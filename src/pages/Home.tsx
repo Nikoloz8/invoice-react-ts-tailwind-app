@@ -28,9 +28,9 @@ export default function Home() {
     return (
         <div className="flex">
             <AsideBar />
-            <div className="w-[100%]! ml-[103px] flex justify-center">
+            <div className="w-[100%]! ml-[103px] max-lg:m-0 flex justify-center">
 
-                <div className="w-[730px]!">
+                <div className="w-[730px]! max-md:w-[672px]! max-sm:w-[327px]!">
 
                     <Header filters={filters} setFilters={setFilters} />
                     <FormContainer />

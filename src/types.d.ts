@@ -90,3 +90,44 @@ type TInvoiceDeliverInfo = {
   allInvoices: TInvoice[]
   setAllInvoices: React.Dispatch<React.SetStateAction<TInvoice[]>>
 }
+
+type TInput = {
+  register: UseFormRegister<TInvoice>
+  errors: FieldErrors<TInvoice>
+}
+
+type TBillPartTop = {
+  register: UseFormRegister<TInvoice>
+  errors: FieldErrors<TInvoice>
+  setSelected: React.Dispatch<React.SetStateAction<number>>
+  setValue: UseFormSetValue<TInvoice>
+  watch: UseFormWatch<TInvoice>
+  selected: number
+}
+
+type TItems = {
+  fields: FieldArrayWithId<TInvoice, "items", "id">[]
+  watch: UseFormWatch<TInvoice>
+  append: UseFieldArrayAppend<TInvoice, "items">
+  errors: FieldErrors<TInvoice>
+  setValue: UseFormSetValue<TInvoice>
+  getValues: UseFormGetValues<TInvoice>
+
+}
+
+type TFormButtonsBar = {
+  reset: UseFormReset<TInvoice>
+  watch: UseFormWatch<TInvoice>
+  setError: UseFormSetError<TInvoice>
+  setValue: UseFormSetValue<TInvoice>
+  clearErrors: UseFormClearErrors<TInvoice>
+  getValues: UseFormGetValues<TInvoice>
+  handleSubmit: UseFormHandleSubmit<TInvoice, TInvoice>
+}
+
+interface IItems {
+  quantity: number
+  name: string
+  price: number
+
+}

@@ -1,12 +1,25 @@
 @import "tailwindcss";
 
 @layer base {
+
   html {
     font-size: 10px !important;
     font-family: "League Spartan";
   }
 
-  body{
+  body {
     overflow-x: hidden !important;
   }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    background:  #373B53;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #252945;
+    border-radius: 4px;
+    height: 1px;
+  }
+
 }

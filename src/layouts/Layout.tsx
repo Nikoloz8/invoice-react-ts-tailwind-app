@@ -50,7 +50,7 @@ export default function Layout() {
 
     return (
         <MainContext.Provider value={{ toggle, editForm, setEditForm, setToggle, invoices, setInvoices, showForm, setShowForm, invoice, setInvoice }}>
-            <div className="bg-[#F8F8FB] w-[100%] min-h-[100vh] h-[100%]">
+            <div className={`bg-[#F8F8FB] w-[100%] min-h-[100vh] h-[100%] ${toggle? "bg-[#141625]!" : undefined}`}>
                 <Outlet />
             </div>
         </MainContext.Provider>

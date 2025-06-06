@@ -16,9 +16,9 @@ export default function Details() {
     const { detailsid } = useParams()
     const [allInvoices, setAllInvoices] = useState<TInvoice[]>([])
 
-    const { setInvoice } = useContext(MainContext)
+    const { setInvoice, toggle } = useContext(MainContext)
 
-    
+
     useEffect(() => {
         const stringedData = localStorage.getItem("1")
         if (stringedData) {
@@ -43,8 +43,8 @@ export default function Details() {
         <div>
             <ConfirmDeletion confirmDeletion={confirmDeletion} setConfirmDeletion={setConfirmDeletion} />
             <AsideBar />
-            <div className="w-[100%]! ml-[60px] pb-[50px] pt-[50px] flex justify-center">
-                <div className="w-[730px]!">
+            <div className="w-[100%]! ml-[60px] pb-[50px] max-lg:ml-[0] max-lg:pt-[120px] pt-[50px] flex justify-center">
+                <div className="w-[730px]! max-md:p-[0_24px_0_24px] max-md:w-[688px]!">
 
                     <BackButton />
 
@@ -52,7 +52,7 @@ export default function Details() {
 
                     <FormContainer />
 
-                    <div className="w-[100%] bg-[#FFFFFF] rounded-[8px] p-[48px] mt-[20px] flex shadow-[0_10px_10px_-10px_rgba(72,84,159,0.1)] flex-col">
+                    <div className={`w-[100%] ${toggle ? "bg-[#1E2139]!" : undefined} bg-[#FFFFFF] rounded-[8px] p-[48px] max-sm:p-[24px]! mt-[20px] flex shadow-[0_10px_10px_-10px_rgba(72,84,159,0.1)] flex-col`}>
 
                         <InvoiceDeliverInfo allInvoices={allInvoices} setAllInvoices={setAllInvoices} />
 

@@ -21,7 +21,6 @@ export default function Functions(args: TFunctionsArgs = {}) {
             setInvoice(updatedInvoice)
             setAllInvoices(updatedInvoices)
         }
-
     }
 
     function filterInvoices(invoices: TInvoice[], filters: {
@@ -124,9 +123,7 @@ export default function Functions(args: TFunctionsArgs = {}) {
         setShowForm(false)
     }
 
-    // const handleReset = () => {
-    //     reset()
-    // }
+
 
     const navigate = useNavigate()
 
@@ -150,7 +147,7 @@ export default function Functions(args: TFunctionsArgs = {}) {
         const day = String(date.getDate()).padStart(2, "0")
         return `${year}-${month}-${day}`
     }
-    
+
 
     return {
         filterInvoices,
@@ -162,7 +159,6 @@ export default function Functions(args: TFunctionsArgs = {}) {
         save, markAsPaid,
         deleteInvoice,
         addDays,
-        handleSaveChanges,
-        // handleReset
+        handleSaveChanges
     }
 }
