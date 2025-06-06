@@ -24,8 +24,8 @@ export default function InvoiceDeliverInfo({ allInvoices, setAllInvoices }: TInv
                     <h5 className={`${P1} text-[#7E88C3] text-right`}>{invoice?.senderAddress.country}</h5>
                 </div>
             </div>
-            <div className="w-[85%] mt-[24px] flex justify-between">
-                <div>
+            <div className="w-[100%] mt-[24px] flex justify-between">
+                <div className="w-[33.3%]!">
                     <div className="mb-[16px]">
                         <h5 className={`${P2} text-[#7E88C3] mb-[8px]`}>Invoice Date</h5>
                         <h3 className={`${H3}`}>{invoice?.createdAt ? formatDate(invoice.createdAt).slice(3) : ''}</h3>
@@ -36,7 +36,7 @@ export default function InvoiceDeliverInfo({ allInvoices, setAllInvoices }: TInv
                         <h3 className={`${H3}`}>{invoice?.clientName || ''}</h3>
                     </div>
                 </div>
-                <div>
+                <div className="w-[33.3%]!">
                     <h5 className={`${P2} text-[#7E88C3] mb-[8px]`}>Bill To</h5>
                     <h3 className={`${H3} mb-[8px]`}>{invoice?.clientName}</h3>
                     <div className="flex flex-col gap-[4px]!">
@@ -46,7 +46,7 @@ export default function InvoiceDeliverInfo({ allInvoices, setAllInvoices }: TInv
                         <h5 className={`${P2} text-[#7E88C3]`}>{invoice?.clientAddress.country}</h5>
                     </div>
                 </div>
-                <div>
+                <div className="w-[33.3%]!">
                     <h5 className={`${P2} text-[#7E88C3] mb-[8px]`}>Sent to</h5>
                     <h3 className={`${H3}`}>{invoice?.clientEmail}</h3>
                 </div>

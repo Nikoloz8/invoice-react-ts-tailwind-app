@@ -77,8 +77,6 @@ export default function Functions(args: TFunctionsArgs = {}) {
 
     const save = (invoice: TInvoice) => {
 
-        console.log(invoice)
-
         let totalCount = 0
         for (let i = 0; i < invoice.items.length; i++) {
             totalCount += invoice.items[i].total || 0
@@ -126,6 +124,10 @@ export default function Functions(args: TFunctionsArgs = {}) {
         setShowForm(false)
     }
 
+    // const handleReset = () => {
+    //     reset()
+    // }
+
     const navigate = useNavigate()
 
     const deleteInvoice = () => {
@@ -148,7 +150,7 @@ export default function Functions(args: TFunctionsArgs = {}) {
         const day = String(date.getDate()).padStart(2, "0")
         return `${year}-${month}-${day}`
     }
-
+    
 
     return {
         filterInvoices,
@@ -160,6 +162,7 @@ export default function Functions(args: TFunctionsArgs = {}) {
         save, markAsPaid,
         deleteInvoice,
         addDays,
-        handleSaveChanges
+        handleSaveChanges,
+        // handleReset
     }
 }

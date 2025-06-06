@@ -16,8 +16,11 @@ export default function Form() {
         control,
         reset,
         setValue,
+        clearErrors,
         getValues,
-        handleSubmit
+        handleSubmit,
+        setError,
+        formState: { errors }
     } = useForm<TInvoice>({
         defaultValues: {
             id: `${Math.floor(Math.random() * 1000000)}`,
@@ -84,10 +87,10 @@ export default function Form() {
         handlePriceChange,
         save,
         addDays,
-        handleSaveChanges
-    } = Functions({ watch, reset, setValue, getValues })
+        handleSaveChanges,
+    } = Functions({ watch, reset, setValue, getValues, setError })
 
-    const { labelInput, P2, H4, inputStyle } = tailwind()
+    const { labelInput, P2, H4, inputStyle, errorMessageStyle } = tailwind()
 
     const { fields, append } = useFieldArray({
         name: "items",
@@ -107,69 +110,76 @@ export default function Form() {
         setValue("id", `${Math.floor(Math.random() * 1000000)}`)
     }, [])
 
+    useEffect(() => {
+        const createdAt = watch("createdAt")
+        if (createdAt && selected) {
+            const dueDate = addDays(createdAt, selected)
+            setValue("paymentDue", dueDate)
+        }
+    }, [watch("createdAt"), selected])
+
     return (
         <form onSubmit={(e) => e.preventDefault()} action="">
             <div className="flex flex-col gap-[24px] mt-[50px]">
                 <h4 className={`${H4} text-[#7C5DFA]`}>Bill From</h4>
                 <div className={labelInput}>
-                    <label className={`${P2} text-[#7E88C3]`} htmlFor="FAddress">Street Address</label>
-                    <input type="text" id="FAddress" {...register("senderAddress.street")} className={`${inputStyle}`} />
+                    <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.senderAddress?.street ? "text-[#EC5757]" : undefined}`} htmlFor="FAddress">Street Address{errors.senderAddress?.street && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                    <input type="text" id="FAddress" {...register("senderAddress.street", { required: "can’t be empty" })} className={`${inputStyle} ${errors.senderAddress?.street ? "border-[#EC5757]!" : undefined}`} />
                 </div>
 
                 <div className="flex justify-between">
                     <div className={`${labelInput} w-[30%]`}>
-                        <label className={`${P2} text-[#7E88C3]`} htmlFor="FCity">City</label>
-                        <input type="text" id="FCity" {...register("senderAddress.city")} className={`${inputStyle}`} />
+                        <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.senderAddress?.city ? "text-[#EC5757]" : undefined}`} htmlFor="FCity">City{errors.senderAddress?.city && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                        <input type="text" id="FCity" {...register("senderAddress.city", { required: "can’t be empty" })} className={`${inputStyle} ${errors.senderAddress?.city ? "border-[#EC5757]!" : undefined}`} />
                     </div>
                     <div className={`${labelInput} w-[30%]`}>
-                        <label className={`${P2} text-[#7E88C3]`} htmlFor="FPostCode">Post Code</label>
-                        <input type="text" id="FPostCode" {...register("senderAddress.postCode")} className={`${inputStyle}`} />
+                        <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.senderAddress?.postCode ? "text-[#EC5757]" : undefined}`} htmlFor="FPostCode">Post Code{errors.senderAddress?.postCode && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                        <input type="text" id="FPostCode" {...register("senderAddress.postCode", { required: "can’t be empty" })} className={`${inputStyle} ${errors.senderAddress?.postCode ? "border-[#EC5757]!" : undefined}`} />
                     </div>
                     <div className={`${labelInput} w-[30%]`}>
-                        <label className={`${P2} text-[#7E88C3]`} htmlFor="FCountry">Country</label>
-                        <input type="text" id="FCountry" {...register("senderAddress.country")} className={`${inputStyle}`} />
+                        <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.senderAddress?.country ? "text-[#EC5757]" : undefined}`} htmlFor="FCountry">Country{errors.senderAddress?.country && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                        <input type="text" id="FCountry" {...register("senderAddress.country", { required: "can’t be empty" })} className={`${inputStyle} ${errors.senderAddress?.country ? "border-[#EC5757]!" : undefined}`} />
                     </div>
                 </div>
             </div>
-
 
             <div className="mt-[50px] gap-[24px] flex flex-col">
                 <h4 className={`${H4} text-[#7C5DFA]`}>Bill To</h4>
 
                 <div className={labelInput}>
-                    <label className={`${P2} text-[#7E88C3]`} htmlFor="name">Client’s Name</label>
-                    <input type="text" id="name" {...register("clientName")} className={`${inputStyle}`} />
+                    <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.clientName ? "text-[#EC5757]" : undefined}`} htmlFor="name">Client’s Name{errors.clientName && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                    <input type="text" id="name" {...register("clientName", { required: "can’t be empty" })} className={`${inputStyle} ${errors.clientName ? "border-[#EC5757]!" : undefined}`} />
                 </div>
 
                 <div className={labelInput}>
-                    <label className={`${P2} text-[#7E88C3]`} htmlFor="email">Client’s Email</label>
-                    <input type="text" id="email" {...register("clientEmail")} className={`${inputStyle}`} />
+                    <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.clientEmail ? "text-[#EC5757]" : undefined}`} htmlFor="email">Client’s Email {errors.clientEmail && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                    <input type="text" id="email" {...register("clientEmail", { required: "can’t be empty" })} className={`${inputStyle} ${errors.clientEmail ? "border-[#EC5757]!" : undefined}`} />
                 </div>
 
                 <div className={labelInput}>
-                    <label className={`${P2} text-[#7E88C3]`} htmlFor="TAddress">Street Address</label>
-                    <input type="text" id="TAddress" {...register("clientAddress.street")} className={`${inputStyle}`} />
+                    <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.clientAddress?.street ? "text-[#EC5757]" : undefined}`} htmlFor="TAddress">Street Address{errors.clientAddress?.street && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                    <input type="text" id="TAddress" {...register("clientAddress.street", { required: "can’t be empty" })} className={`${inputStyle} ${errors.clientAddress?.street ? "border-[#EC5757]!" : undefined}`} />
                 </div>
 
                 <div className="flex justify-between">
                     <div className={`${labelInput} w-[30%]`}>
-                        <label className={`${P2} text-[#7E88C3]`} htmlFor="TCity">City</label>
-                        <input type="text" id="TCity" {...register("clientAddress.city")} className={`${inputStyle}`} />
+                        <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.clientAddress?.city ? "text-[#EC5757]" : undefined}`} htmlFor="TCity">City{errors.clientAddress?.city && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                        <input type="text" id="TCity" {...register("clientAddress.city", { required: "can’t be empty" })} className={`${inputStyle} ${errors.clientAddress?.city ? "border-[#EC5757]!" : undefined}`} />
                     </div>
                     <div className={`${labelInput} w-[30%]`}>
-                        <label className={`${P2} text-[#7E88C3]`} htmlFor="TPostCode">Post Code</label>
-                        <input type="text" id="TPostCode" {...register("clientAddress.postCode")} className={`${inputStyle}`} />
+                        <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.clientAddress?.postCode ? "text-[#EC5757]" : undefined}`} htmlFor="TPostCode">Post Code{errors.clientAddress?.postCode && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                        <input type="text" id="TPostCode" {...register("clientAddress.postCode", { required: "can’t be empty" })} className={`${inputStyle} ${errors.clientAddress?.postCode ? "border-[#EC5757]!" : undefined}`} />
                     </div>
                     <div className={`${labelInput} w-[30%]`}>
-                        <label className={`${P2} text-[#7E88C3]`} htmlFor="TCountry">Country</label>
-                        <input type="text" id="TCountry" {...register("clientAddress.country")} className={`${inputStyle}`} />
+                        <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.clientAddress?.country ? "text-[#EC5757]" : undefined}`} htmlFor="TCountry">Country{errors.clientAddress?.country && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                        <input type="text" id="TCountry" {...register("clientAddress.country", { required: "can’t be empty" })} className={`${inputStyle} ${errors.clientAddress?.country ? "border-[#EC5757]!" : undefined}`} />
                     </div>
                 </div>
 
                 <div className="flex justify-between">
                     <div className="w-[48%]">
-                        <label className={`${P2} text-[#7E88C3]`} htmlFor="TInvoiceDate">Invoice Date</label>
-                        <input type="date" id="TInvoiceDate" {...register("createdAt")} className={`${inputStyle} `} />
+                        <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.createdAt ? "text-[#EC5757]" : undefined}`} htmlFor="TInvoiceDate">Invoice Date{errors.createdAt && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                        <input type="date" id="TInvoiceDate" {...register("createdAt", { required: "can’t be empty" })} className={`${inputStyle} ${errors.createdAt ? "border-[#EC5757]!" : undefined}`} />
                     </div>
                     <div className="w-[48%]">
                         <label className={`${P2} text-[#7E88C3]`} htmlFor="TPaymentTerms">Payment Terms</label>
@@ -216,9 +226,9 @@ export default function Form() {
                     </div>
                 </div>
 
-                <div className={`${labelInput}`}>
-                    <label className={`${P2} text-[#7E88C3]`} htmlFor="TProjectDescription">Project Description</label>
-                    <input type="text" id="TProjectDescription" {...register("description")} className={`${inputStyle}`} />
+                <div className={`${labelInput} `}>
+                    <label className={`${P2} text-[#7E88C3] flex justify-between ${errors.description ? "text-[#EC5757]" : undefined}`} htmlFor="TProjectDescription">Project Description{errors.description && (<p className={`${errorMessageStyle}`}>can’t be empty</p>)}</label>
+                    <input type="text" id="TProjectDescription" {...register("description", { required: "can’t be empty" })} className={`${inputStyle} ${errors.description ? "border-[#EC5757]!" : undefined}`} />
                 </div>
 
                 <h3 className="text-[1.8rem] leading-[32px] tracking-[-0.38px] font-[700] text-[#777F98]">Item List</h3>
@@ -266,7 +276,9 @@ export default function Form() {
                         total: 0
                     })}>+ Add New Item</button>
                 </div>
-
+                <div>
+                    {errors.items && <p className={`${errorMessageStyle}`}>{errors.items.message}</p>}
+                </div>
             </div>
 
             <div className={`fixed bottom-0 ${showForm ? "left-0" : "left-[-620px]"} w-[620px] h-[100px] transition-all duration-1000 ease-in-out bg-[#FFFFFF] shadow-[-15px_0_50px_rgba(0,0,0,0.1)] flex items-center p-[0_50px_0_150px]`}>
@@ -279,8 +291,24 @@ export default function Form() {
                         }, 400)
                     }}>Cancel</button>
                     <button className={`w-[138px] h-[48px] rounded-[24px] bg-[#7C5DFA] ${H4} text-[#FFFFFF]! outline-none cursor-pointer`} onClick={() => {
-                        handleSaveChanges(watch())
-                        reset()
+                        if (watch()?.items.length === 0) {
+                            setError("items", {
+                                type: "manual",
+                                message: "- An item must be added",
+                            })
+                            return
+                        }
+
+                        if (!watch().items.every((e) => e.name && e.quantity && e.price)) {
+                            setError("items", {
+                                type: "manual",
+                                message: "- All items must be filled",
+                            })
+                            return
+                        }
+                        setValue("status", "pending")
+                        clearErrors("items")
+                        handleSubmit(handleSaveChanges)()
                     }}>Save Changes</button>
                 </div> : <div className="flex justify-between w-[100%]">
                     <button className={`w-[96px] h-[48px] outline-none rounded-[24px] bg-[#F9FAFE] ${P2} text-[#7E88C3] font-[700] cursor-pointer`} onClick={() => {
@@ -290,9 +318,25 @@ export default function Form() {
                     <div className="w-[100%] gap-[8px] flex justify-end">
                         <button onClick={() => {
                             setValue("status", "draft")
-                            handleSubmit(save)()
+                            save(getValues())
                         }} className={`w-[133px] outline-none h-[48px] rounded-[24px] bg-[#373B53] ${H4} text-[#888EB0]! cursor-pointer`}>Save as Draft</button>
                         <button className={`w-[128px] h-[48px] rounded-[24px] bg-[#7C5DFA] ${H4} text-[#FFFFFF]! outline-none cursor-pointer`} onClick={() => {
+                            if (watch()?.items.length === 0) {
+                                setError("items", {
+                                    type: "manual",
+                                    message: "- An item must be added",
+                                })
+                                return
+                            }
+
+                            if (!watch().items.every((e) => e.name && e.quantity && e.price)) {
+                                setError("items", {
+                                    type: "manual",
+                                    message: "- All items must be filled",
+                                })
+                                return
+                            }
+                            clearErrors("items")
                             setValue("status", "pending")
                             handleSubmit(save)()
                         }}>Save & Send</button>

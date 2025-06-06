@@ -22,7 +22,6 @@ export default function ButtonsBar({ setConfirmDeletion, allInvoices, setAllInvo
                 <button className={`w-[73px] h-[48px] rounded-[24px] bg-[#F9FAFE] flex items-center justify-center ${P2} text-[#7E88C3] font-[700] cursor-pointer`} onClick={() => { 
                     setShowForm(true)
                     setEditForm(true) 
-                    console.log(invoice)
                     }}>Edit</button>
                 <button className={`w-[89px] h-[48px] rounded-[24px] bg-[#EC5757] flex items-center justify-center cursor-pointer ${P2} text-[#FFFFFF] font-[700]`} onClick={() => {setConfirmDeletion(true)}}>Delete</button>
                 {invoice?.status !== "paid" ? <button onClick={() => markAsPaid()} className={`w-[131px] h-[48px] rounded-[24px] bg-[#7C5DFA] flex items-center cursor-pointer justify-center ${P2} text-[#FFFFFF] font-[700]`}>Mark as Paid</button> : undefined}

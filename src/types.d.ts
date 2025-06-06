@@ -50,6 +50,7 @@ type TFunctionsArgs = Partial<{
   getValues: UseFormGetValues<TInvoice>
   allInvoices: TInvoice[]
   setAllInvoices: React.Dispatch<React.SetStateAction<TInvoice[]>>
+  setError: UseFormSetError<TInvoice>
 }>
 
 type TRenderInvoices = {

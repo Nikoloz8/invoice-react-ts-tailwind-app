@@ -18,6 +18,7 @@ export default function Details() {
 
     const { setInvoice } = useContext(MainContext)
 
+    
     useEffect(() => {
         const stringedData = localStorage.getItem("1")
         if (stringedData) {
