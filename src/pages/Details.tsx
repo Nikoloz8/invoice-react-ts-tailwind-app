@@ -57,7 +57,10 @@ export default function Details() {
                         <InvoiceDeliverInfo allInvoices={allInvoices} setAllInvoices={setAllInvoices} />
 
                         <CalculationResults />
+                        {/* <div className={`fixed bottom-0 w-[100vw] h-[100px] left-0 transition-all duration-1000 ease-in-out bg-[#FFFFFF] shadow-[-15px_0_50px_rgba(0,0,0,0.1)] flex items-center ${toggle ? "bg-[#141625]!" : undefined}`}>
 
+
+                        </div> */}
                     </div>
                 </div>
             </div>
