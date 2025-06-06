@@ -83,6 +83,8 @@ type TButtonsBar = {
   setConfirmDeletion: Setter<boolean>
   allInvoices: TInvoice[]
   setAllInvoices: Setter<TInvoice[]>
+  isMobile: boolean
+  setIsMobile: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 

@@ -2,7 +2,7 @@ import { useContext } from "react"
 import tailwind from "../../shared/tailwind"
 import { MainContext } from "../../layouts/Layout"
 
-export default function CalculationResults() {
+export default function CalculationResults({ isMobile }: { isMobile: boolean }) {
 
     const { H3, P2, P1, H2, H4 } = tailwind()
 
@@ -11,7 +11,7 @@ export default function CalculationResults() {
     return (
         <div className="mt-[40px]">
             <div className={`w-[100%] rounded-[8px_8px_0_0] bg-[#F9FAFE] p-[24px] ${toggle ? "bg-[#252945]!" : undefined}`}>
-                <div className="flex justify-between">
+                {!isMobile ? <div className="flex justify-between">
                     <div className="flex flex-col gap-[20px]!">
                         <h5 className={`${P2} text-[#7E88C3]`}>Item Name</h5>
                         {invoice?.items.map((e, index) => {
@@ -38,9 +38,22 @@ export default function CalculationResults() {
                             return <h3 key={index} className={`${H3} text-center font-[700]`}>£ {e.total.toFixed(2)}</h3>
                         })}
                     </div>
-                </div>
+                </div> :
+                    <div className="flex flex-col">
+                        <div>
+                            {invoice?.items.map((e, index) => {
+                                return <div key={index} className="flex justify-between">
+                                    <div>
+                                        <h3 className={`${H3} font-[700]`}>{e.name}</h3>
+                                        <h3 className={`${H3} font-[700] text-[#888EB0]!`}>{e.quantity} x £ {e.price}</h3>
+                                    </div>
+                                    <h3 key={index} className={`${H3} mt-[10px] text-center font-[700]`}>£ {e.total.toFixed(2)}</h3>
+                                </div>
+                            })}
+                        </div>
+                    </div>}
             </div>
-            <div className={`flex justify-between items-center w-[100%] rounded-[0_0_8px_8px] bg-[#373B53] p-[24px] ${toggle? "bg-[#0C0E16]!" : undefined}`}>
+            <div className={`flex justify-between items-center w-[100%] rounded-[0_0_8px_8px] bg-[#373B53] p-[24px] ${toggle ? "bg-[#0C0E16]!" : undefined}`}>
                 <h5 className={`${P1} text-[#FFFFFF]`}>Amount Due</h5>
                 <h2 className={`${H2} text-[#FFFFFF]`}>£{invoice?.total.toFixed(2)}</h2>
             </div>

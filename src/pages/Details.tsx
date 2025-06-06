@@ -29,26 +29,34 @@ export default function Details() {
         }
     }, [detailsid])
 
-
-    const body = document.querySelector("body")
     const [confirmDeletion, setConfirmDeletion] = useState(false)
 
-    if (confirmDeletion) {
-        body?.style.setProperty("overflow", "hidden")
-    } else {
-        body?.style.setProperty("overflow", "auto")
-    }
+    useEffect(() => {
+        const body = document.querySelector("body")
+        if (confirmDeletion) {
+            body?.style.setProperty("overflow", "hidden")
+        } else {
+            body?.style.setProperty("overflow", "auto")
+        }
+
+        return () => {
+            body?.style.setProperty("overflow", "auto")
+        }
+    }, [confirmDeletion])
+
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 640)
+
 
     return (
         <div>
             <ConfirmDeletion confirmDeletion={confirmDeletion} setConfirmDeletion={setConfirmDeletion} />
             <AsideBar />
             <div className="w-[100%]! ml-[60px] pb-[50px] max-lg:ml-[0] max-lg:pt-[120px] pt-[50px] flex justify-center">
-                <div className="w-[730px]! max-md:p-[0_24px_0_24px] max-md:w-[688px]!">
+                <div className="w-[730px]! max-sm:mb-[80px] max-md:p-[0_24px_0_24px] max-md:w-[688px]!">
 
                     <BackButton />
 
-                    <ButtonsBar setConfirmDeletion={setConfirmDeletion} allInvoices={allInvoices} setAllInvoices={setAllInvoices} />
+                    <ButtonsBar setConfirmDeletion={setConfirmDeletion} allInvoices={allInvoices} setAllInvoices={setAllInvoices} setIsMobile={setIsMobile} isMobile={isMobile} />
 
                     <FormContainer />
 
@@ -56,11 +64,8 @@ export default function Details() {
 
                         <InvoiceDeliverInfo allInvoices={allInvoices} setAllInvoices={setAllInvoices} />
 
-                        <CalculationResults />
-                        {/* <div className={`fixed bottom-0 w-[100vw] h-[100px] left-0 transition-all duration-1000 ease-in-out bg-[#FFFFFF] shadow-[-15px_0_50px_rgba(0,0,0,0.1)] flex items-center ${toggle ? "bg-[#141625]!" : undefined}`}>
+                        <CalculationResults isMobile={isMobile} />
 
-
-                        </div> */}
                     </div>
                 </div>
             </div>

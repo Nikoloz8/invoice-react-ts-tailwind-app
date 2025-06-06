@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom"
 import tailwind from "../../shared/tailwind"
 import { useContext } from "react"
 import { MainContext } from "../../layouts/Layout"
-// import Functions from "../../utils/Functions"
 
 export default function BackButton() {
 

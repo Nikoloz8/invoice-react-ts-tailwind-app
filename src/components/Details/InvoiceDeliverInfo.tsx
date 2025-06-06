@@ -25,7 +25,7 @@ export default function InvoiceDeliverInfo({ allInvoices, setAllInvoices }: TInv
                 </div>
             </div>
             <div className="w-[100%] mt-[24px] flex justify-between max-sm:flex-col">
-                <div className="w-[66.6%] flex justify-between max-sm:gap-[50px]">
+                <div className="w-[66.6%] max-sm:w-[100%] flex justify-between max-sm:gap-[50px]">
                     <div className="w-[50%]!">
                         <div className="mb-[16px] max-sm:mb-[32px]">
                             <h5 className={`${P2} text-[#7E88C3] mb-[8px]`}>Invoice Date</h5>
